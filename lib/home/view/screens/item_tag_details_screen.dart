@@ -171,7 +171,7 @@ class ItemTagDetailsScreen extends StatelessWidget {
                       ),
                       Icon(
                         Icons.location_on_outlined,
-                      )
+                      ),
                     ],
                   ),
                   Row(
@@ -234,7 +234,7 @@ class ItemTagDetailsScreen extends StatelessWidget {
                   ],
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
