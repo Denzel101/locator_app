@@ -31,4 +31,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  fonts:
+    - family: SplineSans
+      fonts:
+        - asset: assets/fonts/SplineSans-Regular.ttf
+
   generate: true
