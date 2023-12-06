@@ -12,5 +12,16 @@ class AppTheme {
       secondary: kCustomLimeGreen,
     ),
     useMaterial3: true,
+    expansionTileTheme: const ExpansionTileThemeData(
+      textColor: Colors.black,
+      collapsedTextColor: kCustomBlack,
+      iconColor: Colors.black,
+      collapsedIconColor: Colors.black,
+      childrenPadding: EdgeInsets.only(
+        left: kAppPadding,
+        right: kAppPadding,
+        bottom: kAppPadding,
+      ),
+    ),
   );
 }

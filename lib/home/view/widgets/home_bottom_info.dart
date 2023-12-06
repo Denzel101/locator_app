@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:locator_app/constants/constants.dart';
 import 'package:locator_app/home/home.dart';
+import 'package:locator_app/router/router.dart';
 
 class HomeBottomInfo extends StatelessWidget {
   const HomeBottomInfo({
@@ -71,7 +72,8 @@ class HomeBottomInfo extends StatelessWidget {
               height: size.height * 0.01,
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () =>
+                  Navigator.pushNamed(context, AppRouter.itemTagDetailsRoute),
               child: SizedBox(
                 width: double.infinity,
                 height: 70,
