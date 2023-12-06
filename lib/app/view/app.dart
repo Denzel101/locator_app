@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:locator_app/counter/counter.dart';
 import 'package:locator_app/l10n/l10n.dart';
+import 'package:locator_app/router/router.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -16,7 +16,9 @@ class App extends StatelessWidget {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const CounterPage(),
+      initialRoute: AppRouter.homeRoute,
+      debugShowCheckedModeBanner: false,
+      onGenerateRoute: AppRouter.onGenerateRoute,
     );
   }
 }
