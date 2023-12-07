@@ -59,7 +59,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           position: latLng,
                           infoWindow: const InfoWindow(
                             title: 'Marker Title',
-                            snippet: 'Marker Snippet',
                           ),
                         );
                       }).toSet();

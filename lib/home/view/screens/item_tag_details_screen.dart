@@ -170,50 +170,53 @@ class ItemTagDetailsScreen extends StatelessWidget {
             SizedBox(
               height: size.height * 0.02,
             ),
-            Container(
-              height: 120,
-              width: double.infinity,
-              padding: const EdgeInsets.all(kAppPadding),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Now is',
-                        style: kTextLabelStyle,
-                      ),
-                      Icon(
-                        Icons.location_on_outlined,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(item.currentLocation.streetName),
-                      Text(
-                        'Since ${item.currentLocation.createdAt.iSODateToHm()}',
-                        style: kTextLabelStyle.copyWith(fontSize: 15),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'School',
-                        style: kTextLabelStyle.copyWith(fontSize: 13),
-                      ),
-                      const Text('9 min updated'),
-                    ],
-                  ),
-                ],
+            ClipPath(
+              clipper: CustomClipPath(),
+              child: Container(
+                height: 120,
+                width: double.infinity,
+                padding: const EdgeInsets.all(kAppPadding),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Now is',
+                          style: kTextLabelStyle,
+                        ),
+                        Icon(
+                          Icons.location_on_outlined,
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(item.currentLocation.streetName),
+                        Text(
+                          'Since ${item.currentLocation.createdAt.iSODateToHm()}',
+                          style: kTextLabelStyle.copyWith(fontSize: 15),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'School',
+                          style: kTextLabelStyle.copyWith(fontSize: 13),
+                        ),
+                        const Text('9 min updated'),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(
