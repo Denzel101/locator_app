@@ -43,22 +43,30 @@ class _HomeScreenState extends State<HomeScreen> {
                   orElse: SizedBox.shrink,
                   loading: () => const LoadingWidget(),
                   loaded: (result) {
-                    final markers = <LatLng>[];
+                    final locations = <FetchLocationItem>[];
                     for (final location in result.data.items) {
-                      markers.add(
-                        LatLng(
-                          location.currentLocation.latitude,
-                          location.currentLocation.longitude,
+                      locations.add(
+                        FetchLocationItem(
+                          itemId: location.itemId,
+                          itemName: location.itemName,
+                          imageUrl: location.imageUrl,
+                          currentLocation: location.currentLocation,
+                          locationHistory: location.locationHistory,
                         ),
                       );
                     }
                     Set<Marker> createMarkers() {
-                      return markers.map((LatLng latLng) {
+                      return locations.map((location) {
                         return Marker(
-                          markerId: MarkerId(latLng.toString()),
-                          position: latLng,
-                          infoWindow: const InfoWindow(
-                            title: 'Marker Title',
+                          markerId:
+                              MarkerId(location.currentLocation.streetName),
+                          position: LatLng(
+                            location.currentLocation.latitude,
+                            location.currentLocation.longitude,
+                          ),
+                          infoWindow: InfoWindow(
+                            title: location.itemName,
+                            snippet: location.currentLocation.streetName,
                           ),
                         );
                       }).toSet();
