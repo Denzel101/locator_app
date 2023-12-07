@@ -32,6 +32,7 @@ class FetchLocationItem with _$FetchLocationItem {
   factory FetchLocationItem({
     @JsonKey(name: 'item_id') required int itemId,
     @JsonKey(name: 'item_name') required String itemName,
+    @JsonKey(name: 'image_url') required String imageUrl,
     @JsonKey(name: 'current_location') required Location currentLocation,
     @JsonKey(name: 'location_history') required List<Location> locationHistory,
   }) = _FetchLocationItem;
@@ -43,6 +44,7 @@ class FetchLocationItem with _$FetchLocationItem {
 @freezed
 class Location with _$Location {
   factory Location({
+    @JsonKey(name: 'created_at') required String createdAt,
     @JsonKey(name: 'street_name') required String streetName,
     required double latitude,
     required double longitude,

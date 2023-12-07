@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:locator_app/components/components.dart';
 import 'package:locator_app/constants/constants.dart';
 import 'package:locator_app/home/home.dart';
 
@@ -23,26 +25,55 @@ class _HomeScreenState extends State<HomeScreen> {
       CameraPosition(target: _kMapCenter, zoom: 17);
 
   @override
+  void initState() {
+    context.read<FetchLocationCubit>().fetchUserLocation();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
       body: Stack(
         children: [
           Positioned(
-            child: GoogleMap(
-              zoomControlsEnabled: false,
-              mapType: MapType.terrain,
-              initialCameraPosition: _kInitialPosition,
-              onMapCreated: _controller.complete,
-              markers: {
-                const Marker(
-                  markerId: MarkerId('kimathi'),
-                  position: _kMapCenter,
-                  infoWindow: InfoWindow(
-                    title: 'First Community Bank',
-                    snippet: 'Kimathi Street Branch',
-                  ),
-                ),
+            child: BlocBuilder<FetchLocationCubit, FetchLocationState>(
+              builder: (context, state) {
+                return state.maybeWhen(
+                  orElse: SizedBox.shrink,
+                  loading: () => const LoadingWidget(),
+                  loaded: (result) {
+                    final markers = <LatLng>[];
+                    for (final location in result.data.items) {
+                      markers.add(
+                        LatLng(
+                          location.currentLocation.latitude,
+                          location.currentLocation.longitude,
+                        ),
+                      );
+                    }
+                    Set<Marker> createMarkers() {
+                      return markers.map((LatLng latLng) {
+                        return Marker(
+                          markerId: MarkerId(latLng.toString()),
+                          position: latLng,
+                          infoWindow: const InfoWindow(
+                            title: 'Marker Title',
+                            snippet: 'Marker Snippet',
+                          ),
+                        );
+                      }).toSet();
+                    }
+
+                    return GoogleMap(
+                      zoomControlsEnabled: false,
+                      mapType: MapType.terrain,
+                      initialCameraPosition: _kInitialPosition,
+                      onMapCreated: _controller.complete,
+                      markers: createMarkers(),
+                    );
+                  },
+                );
               },
             ),
           ),

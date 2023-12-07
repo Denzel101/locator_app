@@ -1,10 +1,14 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:locator_app/components/components.dart';
 import 'package:locator_app/constants/constants.dart';
 import 'package:locator_app/home/home.dart';
 
 class ItemTagDetailsScreen extends StatelessWidget {
-  const ItemTagDetailsScreen({super.key});
+  const ItemTagDetailsScreen({required this.item, super.key});
+
+  final FetchLocationItem item;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +76,7 @@ class ItemTagDetailsScreen extends StatelessWidget {
                   onTap: () => Navigator.pop(context),
                 ),
                 Text(
-                  'Jeniffer',
+                  item.itemName,
                   style: kTextLabelStyle.copyWith(fontSize: 20),
                 ),
                 const TopAppButton(
@@ -85,13 +89,28 @@ class ItemTagDetailsScreen extends StatelessWidget {
             SizedBox(
               height: size.height * 0.02,
             ),
-            const CircleAvatar(
-              backgroundColor: kCustomLimeGreen,
-              radius: 80,
-              child: Text(
-                'JK',
-                style: TextStyle(color: Colors.black),
+            ExtendedImage.network(
+              width: 160,
+              height: 160,
+              item.imageUrl,
+              border: Border.all(color: kCustomGrey),
+              shape: BoxShape.circle,
+              fit: BoxFit.fill,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(30),
               ),
+              loadStateChanged: (ExtendedImageState state) {
+                switch (state.extendedImageLoadState) {
+                  case LoadState.completed:
+                    return state.completedWidget;
+                  case LoadState.failed:
+                    return const Icon(
+                      Icons.image_not_supported_rounded,
+                    );
+                  case LoadState.loading:
+                    return const LoadingWidget();
+                }
+              },
             ),
             SizedBox(
               height: size.height * 0.02,
@@ -126,9 +145,9 @@ class ItemTagDetailsScreen extends StatelessWidget {
                       color: kCustomLimeGreen,
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const Text(
-                      'id',
-                      style: TextStyle(
+                    child: Text(
+                      item.itemId.toString(),
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -177,9 +196,9 @@ class ItemTagDetailsScreen extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('84 Kamarajar St'),
+                      Text(item.currentLocation.streetName),
                       Text(
-                        'Since 7:54',
+                        'Since ${item.currentLocation.createdAt.iSODateToHm()}',
                         style: kTextLabelStyle.copyWith(fontSize: 15),
                       ),
                     ],
@@ -201,6 +220,11 @@ class ItemTagDetailsScreen extends StatelessWidget {
               height: size.height * 0.02,
             ),
             ExpansionTile(
+              childrenPadding: const EdgeInsets.only(
+                left: kAppPadding,
+                right: kAppPadding,
+                bottom: kAppPadding,
+              ),
               backgroundColor: Colors.white,
               collapsedBackgroundColor: Colors.white,
               iconColor: kCustomBlack,
@@ -223,15 +247,24 @@ class ItemTagDetailsScreen extends StatelessWidget {
               ),
               expandedCrossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text('84 Kamarajar St'),
-                    Text(
-                      '7:54',
-                      style: kTextLabelStyle.copyWith(fontSize: 15),
-                    ),
-                  ],
+                ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: item.locationHistory.length,
+                  itemBuilder: (context, index) {
+                    final history = item.locationHistory[index];
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(history.streetName),
+                        Text(
+                          history.createdAt.iSODateToHm(),
+                          style: kTextLabelStyle.copyWith(fontSize: 15),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ],
             ),
