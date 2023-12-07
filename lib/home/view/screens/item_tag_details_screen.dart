@@ -219,55 +219,7 @@ class ItemTagDetailsScreen extends StatelessWidget {
             SizedBox(
               height: size.height * 0.02,
             ),
-            ExpansionTile(
-              childrenPadding: const EdgeInsets.only(
-                left: kAppPadding,
-                right: kAppPadding,
-                bottom: kAppPadding,
-              ),
-              backgroundColor: Colors.white,
-              collapsedBackgroundColor: Colors.white,
-              iconColor: kCustomBlack,
-              trailing: const TopAppButton(
-                icon: Icons.keyboard_arrow_up_rounded,
-                iconSize: 18,
-                backgroundColor: Colors.transparent,
-                containerHeight: 30,
-                containerWidth: 30,
-                hasShadow: false,
-                borderColor: Colors.grey,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              initiallyExpanded: true,
-              title: const Text(
-                'Last updates',
-                style: kTextLabelStyle,
-              ),
-              expandedCrossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ListView.builder(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: item.locationHistory.length,
-                  itemBuilder: (context, index) {
-                    final history = item.locationHistory[index];
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(history.streetName),
-                        Text(
-                          history.createdAt.iSODateToHm(),
-                          style: kTextLabelStyle.copyWith(fontSize: 15),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ],
-            ),
+            LastUpdatesWidget(item: item),
           ],
         ),
       ),
