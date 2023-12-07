@@ -200,7 +200,8 @@ class ItemTagDetailsScreen extends StatelessWidget {
                       children: [
                         Text(item.currentLocation.streetName),
                         Text(
-                          'Since ${item.currentLocation.createdAt.iSODateToHm()}',
+                          'Since '
+                          '${item.currentLocation.createdAt.iSODateToHm()}',
                           style: kTextLabelStyle.copyWith(fontSize: 15),
                         ),
                       ],
