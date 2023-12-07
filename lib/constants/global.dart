@@ -9,7 +9,7 @@ class OnSpaceValues {
   final String baseDomain;
   final String hiveBoxKey;
 
-  String get baseUrl => '$urlScheme://$baseDomain/api';
+  String get baseUrl => '$urlScheme://$baseDomain/b';
 
   String get hiveBoxEncryptionKey => 'locator_app _${hiveBoxKey}_key';
 }
