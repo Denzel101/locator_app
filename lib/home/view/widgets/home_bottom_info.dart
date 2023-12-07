@@ -59,21 +59,34 @@ class HomeBottomInfo extends StatelessWidget {
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
                                 final item = itemTagFilters[index];
-                                return Container(
-                                  width: 70,
-                                  alignment: Alignment.center,
-                                  margin: const EdgeInsets.only(
-                                    right: kAppPadding / 2,
+                                late var selectedIndex = 0;
+                                return GestureDetector(
+                                  onTap: () {
+                                    selectedIndex = index;
+                                  },
+                                  child: Container(
+                                    width: 70,
+                                    alignment: Alignment.center,
+                                    margin: const EdgeInsets.only(
+                                      right: kAppPadding / 2,
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 2,
+                                      horizontal: 2,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFF95f500),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Text(
+                                      item,
+                                      style: TextStyle(
+                                        color: selectedIndex == index
+                                            ? Colors.black
+                                            : Colors.grey,
+                                      ),
+                                    ),
                                   ),
-                                  padding: const EdgeInsets.symmetric(
-                                    vertical: 2,
-                                    horizontal: 2,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFF95f500),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Text(item),
                                 );
                               },
                             ),
