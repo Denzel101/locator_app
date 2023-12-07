@@ -8,6 +8,7 @@ class AppRouter {
   static const String itemTagDetailsRoute = 'item-tag-details-route';
 
   static Route<String>? onGenerateRoute(RouteSettings settings) {
+    final args = settings.arguments;
     switch (settings.name) {
       case homeRoute:
         return MaterialPageRoute(
@@ -20,8 +21,11 @@ class AppRouter {
         );
 
       case itemTagDetailsRoute:
+        final fetchLocationItem = args! as FetchLocationItem;
         return MaterialPageRoute(
-          builder: (context) => const ItemTagDetailsScreen(),
+          builder: (context) => ItemTagDetailsScreen(
+            item: fetchLocationItem,
+          ),
         );
     }
     return null;
