@@ -27,7 +27,7 @@ class AddNewButton extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const TopAppButton(
+            const CustomCircularButton(
               containerHeight: double.infinity,
               containerWidth: 40,
               backgroundColor: kCustomLimeGreen,

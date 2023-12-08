@@ -24,6 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
   static const CameraPosition _kInitialPosition =
       CameraPosition(target: _kMapCenter, zoom: 17);
 
+  final locations = <FetchLocationItem>[];
+
   @override
   void initState() {
     context.read<FetchLocationCubit>().fetchUserLocation();
@@ -37,51 +39,67 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Stack(
         children: [
           Positioned(
-            child: BlocBuilder<FetchLocationCubit, FetchLocationState>(
-              builder: (context, state) {
-                return state.maybeWhen(
-                  orElse: SizedBox.shrink,
-                  loading: () => const LoadingWidget(),
+            child: BlocListener<FetchLocationCubit, FetchLocationState>(
+              listener: (context, state) {
+                state.mapOrNull(
                   loaded: (result) {
-                    final markers = <LatLng>[];
-                    for (final location in result.data.items) {
-                      markers.add(
-                        LatLng(
-                          location.currentLocation.latitude,
-                          location.currentLocation.longitude,
+                    for (final location in result.response.data.items) {
+                      locations.add(
+                        FetchLocationItem(
+                          itemId: location.itemId,
+                          itemName: location.itemName,
+                          imageUrl: location.imageUrl,
+                          currentLocation: location.currentLocation,
+                          locationHistory: location.locationHistory,
                         ),
                       );
                     }
-                    Set<Marker> createMarkers() {
-                      return markers.map((LatLng latLng) {
-                        return Marker(
-                          markerId: MarkerId(latLng.toString()),
-                          position: latLng,
-                          infoWindow: const InfoWindow(
-                            title: 'Marker Title',
-                            snippet: 'Marker Snippet',
-                          ),
-                        );
-                      }).toSet();
-                    }
-
-                    return GoogleMap(
-                      zoomControlsEnabled: false,
-                      mapType: MapType.terrain,
-                      initialCameraPosition: _kInitialPosition,
-                      onMapCreated: _controller.complete,
-                      markers: createMarkers(),
-                    );
                   },
                 );
               },
+              child: BlocBuilder<FetchLocationCubit, FetchLocationState>(
+                builder: (context, state) {
+                  return state.maybeWhen(
+                    orElse: SizedBox.shrink,
+                    error: (result) => Center(
+                      child: Text(result),
+                    ),
+                    loading: () => const LoadingWidget(),
+                    loaded: (result) {
+                      Set<Marker> createMarkers() {
+                        return locations.map((loc) {
+                          return Marker(
+                            markerId: MarkerId(loc.currentLocation.streetName),
+                            position: LatLng(
+                              loc.currentLocation.latitude,
+                              loc.currentLocation.longitude,
+                            ),
+                            infoWindow: InfoWindow(
+                              title: loc.itemName,
+                              snippet: loc.currentLocation.streetName,
+                            ),
+                          );
+                        }).toSet();
+                      }
+
+                      return GoogleMap(
+                        zoomControlsEnabled: false,
+                        mapType: MapType.terrain,
+                        initialCameraPosition: _kInitialPosition,
+                        onMapCreated: _controller.complete,
+                        markers: createMarkers(),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ),
           const Positioned(
             top: 60,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: kAppPadding),
-              child: TopAppButton(
+              child: CustomCircularButton(
                 icon: Icons.search_rounded,
               ),
             ),
@@ -91,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
             right: 0,
             child: Padding(
               padding: EdgeInsets.only(right: kAppPadding),
-              child: TopAppButton(
+              child: CustomCircularButton(
                 icon: Icons.settings_outlined,
               ),
             ),
@@ -100,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
             top: 300,
             child: Padding(
               padding: EdgeInsets.only(left: kAppPadding),
-              child: TopAppButton(
+              child: CustomCircularButton(
                 icon: Icons.add_rounded,
               ),
             ),
@@ -109,7 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
             top: 360,
             child: Padding(
               padding: EdgeInsets.only(left: kAppPadding),
-              child: TopAppButton(
+              child: CustomCircularButton(
                 icon: Icons.remove_rounded,
               ),
             ),
@@ -118,7 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
             top: 420,
             child: Padding(
               padding: EdgeInsets.only(left: kAppPadding),
-              child: TopAppButton(
+              child: CustomCircularButton(
                 icon: FontAwesomeIcons.locationArrow,
               ),
             ),
