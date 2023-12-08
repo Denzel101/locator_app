@@ -7,11 +7,17 @@ import 'package:locator_app/constants/constants.dart';
 import 'package:locator_app/home/home.dart';
 import 'package:locator_app/router/router.dart';
 
-class HomeBottomInfo extends StatelessWidget {
+class HomeBottomInfo extends StatefulWidget {
   const HomeBottomInfo({
     super.key,
   });
 
+  @override
+  State<HomeBottomInfo> createState() => _HomeBottomInfoState();
+}
+
+class _HomeBottomInfoState extends State<HomeBottomInfo> {
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
@@ -59,11 +65,9 @@ class HomeBottomInfo extends StatelessWidget {
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
                                 final item = itemTagFilters[index];
-                                late var selectedIndex = 0;
                                 return GestureDetector(
-                                  onTap: () {
-                                    selectedIndex = index;
-                                  },
+                                  onTap: () =>
+                                      setState(() => selectedIndex = index),
                                   child: Container(
                                     width: 70,
                                     alignment: Alignment.center,

@@ -55,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       );
                     }
+
                     Set<Marker> createMarkers() {
                       return locations.map((location) {
                         return Marker(
