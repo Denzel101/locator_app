@@ -45,6 +45,8 @@ jobs:
       - run: flutter pub get
       # To clear Flutter's Build cache
       - run: flutter clean
+      # Run build runner
+      - run: dart run build_runner build --delete-conflicting-outputs
       # Build apk.
       - run: flutter build apk --split-per-abi lib/main_development.dart
       # Upload generated apk to the artifacts.
