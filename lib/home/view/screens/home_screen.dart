@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
             top: 60,
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: kAppPadding),
-              child: TopAppButton(
+              child: CustomCircularButton(
                 icon: Icons.search_rounded,
               ),
             ),
@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
             right: 0,
             child: Padding(
               padding: EdgeInsets.only(right: kAppPadding),
-              child: TopAppButton(
+              child: CustomCircularButton(
                 icon: Icons.settings_outlined,
               ),
             ),
@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
             top: 300,
             child: Padding(
               padding: EdgeInsets.only(left: kAppPadding),
-              child: TopAppButton(
+              child: CustomCircularButton(
                 icon: Icons.add_rounded,
               ),
             ),
@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
             top: 360,
             child: Padding(
               padding: EdgeInsets.only(left: kAppPadding),
-              child: TopAppButton(
+              child: CustomCircularButton(
                 icon: Icons.remove_rounded,
               ),
             ),
@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
             top: 420,
             child: Padding(
               padding: EdgeInsets.only(left: kAppPadding),
-              child: TopAppButton(
+              child: CustomCircularButton(
                 icon: FontAwesomeIcons.locationArrow,
               ),
             ),

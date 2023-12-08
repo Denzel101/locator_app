@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:locator_app/constants/constants.dart';
 
-class TopAppButton extends StatelessWidget {
-  const TopAppButton({
+class CustomCircularButton extends StatelessWidget {
+  const CustomCircularButton({
     required this.icon,
     this.onTap,
     this.borderColor = Colors.transparent,

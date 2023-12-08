@@ -21,7 +21,7 @@ class ItemTagDetailsScreen extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const TopAppButton(
+            const CustomCircularButton(
               icon: Icons.call_outlined,
               iconColor: Colors.white,
               iconSize: 18,
@@ -50,7 +50,7 @@ class ItemTagDetailsScreen extends StatelessWidget {
             SizedBox(
               width: size.width * 0.04,
             ),
-            const TopAppButton(
+            const CustomCircularButton(
               iconColor: Colors.white,
               icon: FontAwesomeIcons.batteryHalf,
               iconSize: 18,
@@ -70,7 +70,7 @@ class ItemTagDetailsScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TopAppButton(
+                CustomCircularButton(
                   icon: Icons.keyboard_arrow_left_rounded,
                   iconSize: 30,
                   onTap: () => Navigator.pop(context),
@@ -79,7 +79,7 @@ class ItemTagDetailsScreen extends StatelessWidget {
                   item.itemName,
                   style: kTextLabelStyle.copyWith(fontSize: 20),
                 ),
-                const TopAppButton(
+                const CustomCircularButton(
                   icon: FontAwesomeIcons.locationArrow,
                   iconColor: Colors.white,
                   backgroundColor: Colors.black,
@@ -125,7 +125,7 @@ class ItemTagDetailsScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const TopAppButton(
+                  const CustomCircularButton(
                     icon: Icons.info_outline_rounded,
                     iconSize: 18,
                     backgroundColor: Colors.transparent,
@@ -155,7 +155,7 @@ class ItemTagDetailsScreen extends StatelessWidget {
                   SizedBox(
                     width: size.width * 0.04,
                   ),
-                  const TopAppButton(
+                  const CustomCircularButton(
                     icon: Icons.chat_outlined,
                     iconSize: 18,
                     backgroundColor: Colors.transparent,

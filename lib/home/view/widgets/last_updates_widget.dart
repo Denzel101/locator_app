@@ -24,7 +24,7 @@ class LastUpdatesWidget extends StatelessWidget {
         backgroundColor: Colors.white,
         collapsedBackgroundColor: Colors.white,
         iconColor: kCustomBlack,
-        trailing: const TopAppButton(
+        trailing: const CustomCircularButton(
           icon: Icons.keyboard_arrow_up_rounded,
           iconSize: 18,
           backgroundColor: Colors.transparent,

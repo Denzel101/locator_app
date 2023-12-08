@@ -96,7 +96,7 @@ class _HomeBottomInfoState extends State<HomeBottomInfo> {
                             ),
                           ),
                           const Spacer(),
-                          TopAppButton(
+                          CustomCircularButton(
                             containerWidth: 30,
                             containerHeight: 30,
                             borderColor: Colors.green.shade500,
@@ -172,7 +172,7 @@ class _HomeBottomInfoState extends State<HomeBottomInfo> {
                                     const Spacer(),
                                     Row(
                                       children: [
-                                        TopAppButton(
+                                        CustomCircularButton(
                                           icon: FontAwesomeIcons.batteryHalf,
                                           iconSize: 18,
                                           backgroundColor: Colors.transparent,
@@ -182,7 +182,7 @@ class _HomeBottomInfoState extends State<HomeBottomInfo> {
                                           borderColor: Colors.green.shade500,
                                         ),
                                         SizedBox(width: size.width * 0.02),
-                                        const TopAppButton(
+                                        const CustomCircularButton(
                                           icon: FontAwesomeIcons.locationArrow,
                                           iconColor: Colors.white,
                                           iconSize: 18,
