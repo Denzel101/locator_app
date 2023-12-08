@@ -24,6 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
   static const CameraPosition _kInitialPosition =
       CameraPosition(target: _kMapCenter, zoom: 17);
 
+  final locations = <FetchLocationItem>[];
+
   @override
   void initState() {
     context.read<FetchLocationCubit>().fetchUserLocation();
@@ -37,14 +39,11 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Stack(
         children: [
           Positioned(
-            child: BlocBuilder<FetchLocationCubit, FetchLocationState>(
-              builder: (context, state) {
-                return state.maybeWhen(
-                  orElse: SizedBox.shrink,
-                  loading: () => const LoadingWidget(),
+            child: BlocListener<FetchLocationCubit, FetchLocationState>(
+              listener: (context, state) {
+                state.mapOrNull(
                   loaded: (result) {
-                    final locations = <FetchLocationItem>[];
-                    for (final location in result.data.items) {
+                    for (final location in result.response.data.items) {
                       locations.add(
                         FetchLocationItem(
                           itemId: location.itemId,
@@ -55,34 +54,45 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       );
                     }
-
-                    Set<Marker> createMarkers() {
-                      return locations.map((location) {
-                        return Marker(
-                          markerId:
-                              MarkerId(location.currentLocation.streetName),
-                          position: LatLng(
-                            location.currentLocation.latitude,
-                            location.currentLocation.longitude,
-                          ),
-                          infoWindow: InfoWindow(
-                            title: location.itemName,
-                            snippet: location.currentLocation.streetName,
-                          ),
-                        );
-                      }).toSet();
-                    }
-
-                    return GoogleMap(
-                      zoomControlsEnabled: false,
-                      mapType: MapType.terrain,
-                      initialCameraPosition: _kInitialPosition,
-                      onMapCreated: _controller.complete,
-                      markers: createMarkers(),
-                    );
                   },
                 );
               },
+              child: BlocBuilder<FetchLocationCubit, FetchLocationState>(
+                builder: (context, state) {
+                  return state.maybeWhen(
+                    orElse: SizedBox.shrink,
+                    error: (result) => Center(
+                      child: Text(result),
+                    ),
+                    loading: () => const LoadingWidget(),
+                    loaded: (result) {
+                      Set<Marker> createMarkers() {
+                        return locations.map((loc) {
+                          return Marker(
+                            markerId: MarkerId(loc.currentLocation.streetName),
+                            position: LatLng(
+                              loc.currentLocation.latitude,
+                              loc.currentLocation.longitude,
+                            ),
+                            infoWindow: InfoWindow(
+                              title: loc.itemName,
+                              snippet: loc.currentLocation.streetName,
+                            ),
+                          );
+                        }).toSet();
+                      }
+
+                      return GoogleMap(
+                        zoomControlsEnabled: false,
+                        mapType: MapType.terrain,
+                        initialCameraPosition: _kInitialPosition,
+                        onMapCreated: _controller.complete,
+                        markers: createMarkers(),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
           ),
           const Positioned(

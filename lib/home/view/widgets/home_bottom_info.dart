@@ -1,4 +1,3 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -127,29 +126,10 @@ class _HomeBottomInfoState extends State<HomeBottomInfo> {
                                 height: 70,
                                 child: Row(
                                   children: [
-                                    ExtendedImage.network(
-                                      width: 50,
+                                    InternetImage(
+                                      imageUrl: item.imageUrl,
                                       height: 50,
-                                      item.imageUrl,
-                                      border: Border.all(color: kCustomGrey),
-                                      shape: BoxShape.circle,
-                                      fit: BoxFit.fill,
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(30),
-                                      ),
-                                      loadStateChanged:
-                                          (ExtendedImageState state) {
-                                        switch (state.extendedImageLoadState) {
-                                          case LoadState.completed:
-                                            return state.completedWidget;
-                                          case LoadState.failed:
-                                            return const Icon(
-                                              Icons.image_not_supported_rounded,
-                                            );
-                                          case LoadState.loading:
-                                            return const LoadingWidget();
-                                        }
-                                      },
+                                      width: 50,
                                     ),
                                     SizedBox(
                                       width: size.width * 0.02,

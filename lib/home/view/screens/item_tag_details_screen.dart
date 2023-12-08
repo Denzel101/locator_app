@@ -1,4 +1,3 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:locator_app/components/components.dart';
@@ -89,28 +88,10 @@ class ItemTagDetailsScreen extends StatelessWidget {
             SizedBox(
               height: size.height * 0.02,
             ),
-            ExtendedImage.network(
+            InternetImage(
               width: 160,
               height: 160,
-              item.imageUrl,
-              border: Border.all(color: kCustomGrey),
-              shape: BoxShape.circle,
-              fit: BoxFit.fill,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(30),
-              ),
-              loadStateChanged: (ExtendedImageState state) {
-                switch (state.extendedImageLoadState) {
-                  case LoadState.completed:
-                    return state.completedWidget;
-                  case LoadState.failed:
-                    return const Icon(
-                      Icons.image_not_supported_rounded,
-                    );
-                  case LoadState.loading:
-                    return const LoadingWidget();
-                }
-              },
+              imageUrl: item.imageUrl,
             ),
             SizedBox(
               height: size.height * 0.02,
